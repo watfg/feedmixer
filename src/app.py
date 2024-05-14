@@ -13,7 +13,6 @@ def generate_feed(feed_info):
     feed_generator.title(feed_info["title"])
     feed_generator.subtitle(feed_info["subtitle"])
     feed_generator.author(feed_info["author"])
-    feed_generator.link(href=feed_info["href_alt"], rel="alternate")
     feed_generator.link(href=feed_info["href_self"], rel="self")
     feed_generator.language(feed_info["lang"])
     for item in full_list:
