@@ -1,4 +1,5 @@
 import os
+import pprint
 
 import feedparser
 from feedgen.feed import FeedGenerator
@@ -7,7 +8,7 @@ from input import feedurl_list
 from input import feed_info
 
 
-def generate_feed(feed_info):
+def generate_feed(feed_info, entry_list):
     feed_generator = FeedGenerator()
     feed_generator.id(feed_info["id"])
     feed_generator.title(feed_info["title"])
@@ -15,7 +16,7 @@ def generate_feed(feed_info):
     feed_generator.author(feed_info["author"])
     feed_generator.link(href=feed_info["href_self"], rel="self")
     feed_generator.language(feed_info["lang"])
-    for item in full_list:
+    for item in entry_list:
         feed_entry = feed_generator.add_entry()
         feed_entry.id(item["id"])
         feed_entry.title(item["title"])
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     full_list.sort(key=lambda item: item["updated_parsed"])
 
     # コンテンツ一覧（フル）を使ってまとめフィードを作成する
-    generate_feed(feed_info.full_feed)
+    generate_feed(feed_info.full_feed, full_list)
 
     # 更新分だけ含まれたフィードの作成
     last_data = feedparser.parse(feed_info.full_feed["href_self"])
@@ -58,4 +59,4 @@ if __name__ == "__main__":
         new_list.sort(key=lambda item: item["updated_parsed"])
 
         # 更新分コンテンツを使って更新分だけ含まれたフィードを作成する
-        generate_feed(feed_info.new_feed)
+        generate_feed(feed_info.new_feed, new_list)
