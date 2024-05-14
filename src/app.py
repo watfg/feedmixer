@@ -1,9 +1,10 @@
+import os
+
 import feedparser
 from feedgen.feed import FeedGenerator
-import os
-import pprint
-from resource import feedurl_list
-from resource import feed_info
+
+from input import feedurl_list
+from input import feed_info
 
 
 def generate_feed(feed_info):
